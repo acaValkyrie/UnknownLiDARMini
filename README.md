@@ -1,3 +1,8 @@
+# 使用部品
+- [アリエクLiDAR](https://ja.aliexpress.com/item/1005007119470172.html)
+- [円形ディスプレイ](https://www.switch-science.com/products/7347)
+- [XIAO esp32c3](https://www.switch-science.com/products/8348?_pos=2&_sid=6f0eb353e&_ss=r)
+
 # 以下フォーク元のREADME
 
 # UnknownLiDARMini_M5StackCore2
