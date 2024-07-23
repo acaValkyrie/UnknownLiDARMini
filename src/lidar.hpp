@@ -94,6 +94,8 @@ void remapDegrees(uint16_t minAngle, uint16_t maxAngle, uint16_t *map)
   }
 }
 
+const float maxDistance = 10000;
+
 void plotDistanceMap(WaveshareRoundLCD* lcd, uint16_t* degrees, uint16_t* distances)
 {
   int32_t i;
@@ -103,8 +105,8 @@ void plotDistanceMap(WaveshareRoundLCD* lcd, uint16_t* degrees, uint16_t* distan
   for (i = 0; i < 16; i++) {
     lcd->drawPixel(pointCloud[degrees[i]].x, pointCloud[degrees[i]].y, lcd->color888(0,0,0));
     if (distances[i] < 10000) {
-      x = cos((1.f * PI * degrees[i]) / 180.0f) * (distances[i] / 20.0f) + lcd->width() / 2;
-      y = sin((1.f * PI * degrees[i]) / 180.0f) * (distances[i] / 20.0f) + lcd->height() / 2;
+      x = cos((1.f * PI * degrees[i]) / 180.0f) * (distances[i] / maxDistance * lcd->width()) + lcd->width() / 2;
+      y = sin((1.f * PI * degrees[i]) / 180.0f) * (distances[i] / maxDistance * lcd->width()) + lcd->height() / 2;
 
       lcd->drawPixel(x, y, lcd->color888(255,255,255));
 
