@@ -1,3 +1,5 @@
+# 以下フォーク元のREADME
+
 # UnknownLiDARMini_M5StackCore2
 
 アリエクのジャンク中華ミニ LiDAR を M5Stack Core2 (ESP32) , PlatformIO で使うコードです。
