@@ -1,5 +1,4 @@
-#include <M5Unified.h>
-
+#include <Arduino.h>
 #define LIDARSerial Serial1
 
 typedef struct
