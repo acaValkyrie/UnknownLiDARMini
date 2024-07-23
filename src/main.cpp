@@ -32,7 +32,6 @@ void loop() {
           payload[0] = data;
           state = STATE_READ_HEADER;
         } else {
-          //printf("?? (%02X) Please do LiDAR power cycle\n", data);
           LIDARSerial.flush();
         }
         break;
@@ -63,7 +62,6 @@ void loop() {
           degree_begin = convertDegree(packet->angle_begin);
           degree_end = convertDegree(packet->angle_end);
           if ((degree_begin < 360) && (degree_end < 360)) {
-            printf("%3drpm %5d - %5d\n", convertSpeed(packet->rotation_speed), convertDegree(packet->angle_begin), convertDegree(packet->angle_end));
             uint16_t map[16];
             uint16_t distances[16];
             remapDegrees(degree_begin, degree_end, map);
@@ -83,10 +81,11 @@ void loop() {
             distances[13] = packet->distance_13 & 0x3FFF;
             distances[14] = packet->distance_14 & 0x3FFF;
             distances[15] = packet->distance_15 & 0x3FFF;
+        
             plotDistanceMap(&lcd, map, distances);
           }
         }
-        lcd.setCursor(0, 0);
+        lcd.setCursor(75, 220);
         lcd.printf("Speed : %d rpm  \n", convertSpeed(packet->rotation_speed));
         state = STATE_WAIT_HEADER;
         counter = 0;
