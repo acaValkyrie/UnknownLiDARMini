@@ -1,4 +1,7 @@
 #include <Arduino.h>
+#include <LovyanGFX.hpp>
+#include "lgfx.hpp"
+
 #define LIDARSerial Serial1
 
 typedef struct
@@ -60,28 +63,22 @@ typedef struct {
 
 const uint8_t header[] = { 0x55, 0xaa, 0x23, 0x10 };
 
+WaveshareRoundLCD lcd;
+
 void setup(void) {
-  /*
-  M5.begin();
-  // M5.Lcd.setRotation(1);
-  M5.Lcd.fillScreen(TFT_BLACK);
-  M5.Lcd.printf("Start\n");
-  Serial.begin(115200);
-  */
+  lcd.init();
 
-  auto cfg = M5.config();
-  M5.begin(cfg);
-  M5.Display.setCursor(0,0);
-  M5.Display.print("start!\n");
-  Serial.begin(115200);
+  lcd.fillScreen(lcd.color888(0,200,200));
+  lcd.setCursor(100,100);
+  lcd.print("start!\n");
 
-
-
-  LIDARSerial.begin(230400, SERIAL_8N1, 32, 33);
+  // LIDARSerial.begin(230400, SERIAL_8N1, 32, 33);
 
   delay(10);
 
-  Serial.printf("Start\n");
+  while(true){
+    delay(1000);
+  }
 }
 
 uint16_t convertDegree(uint16_t input)
@@ -120,12 +117,12 @@ void plotDistanceMap(uint16_t* degrees, uint16_t* distances)
   static Point_t pointCloud[360];      // 360度分の点群
 
   for (i = 0; i < 16; i++) {
-    M5.Display.drawPixel(pointCloud[degrees[i]].x, pointCloud[degrees[i]].y, BLACK);
+    lcd.drawPixel(pointCloud[degrees[i]].x, pointCloud[degrees[i]].y, lcd.color888(0,0,0));
     if (distances[i] < 10000) {
       x = cos((1.f * PI * degrees[i]) / 180.0f) * (distances[i] / 20.0f) + 160;
       y = sin((1.f * PI * degrees[i]) / 180.0f) * (distances[i] / 20.0f) + 120;
 
-      M5.Display.drawPixel(x, y, WHITE);
+      lcd.drawPixel(x, y, lcd.color888(255,255,255));
 
       pointCloud[degrees[i]].x = x;
       pointCloud[degrees[i]].y = y;
@@ -204,8 +201,8 @@ void loop() {
             plotDistanceMap(map, distances);
           }
         }
-        M5.Display.setCursor(0, 0);
-        M5.Display.printf("Speed : %d rpm  \n", convertSpeed(packet->rotation_speed));
+        lcd.setCursor(0, 0);
+        lcd.printf("Speed : %d rpm  \n", convertSpeed(packet->rotation_speed));
         state = STATE_WAIT_HEADER;
         counter = 0;
         state = STATE_WAIT_HEADER;

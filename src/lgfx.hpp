@@ -4,12 +4,12 @@
 #include <LovyanGFX.hpp>
 
 #define TFT_MISO -1
-#define TFT_MOSI 11
-#define TFT_SCLK 12
-#define TFT_CS 10
-#define TFT_DC 14
-#define TFT_RST 13
-#define TFT_BL 9
+#define TFT_MOSI 10
+#define TFT_SCLK 8
+#define TFT_CS 2
+#define TFT_DC 3
+#define TFT_RST 4
+#define TFT_BL 5
 
 class WaveshareRoundLCD : public lgfx::LGFX_Device
 {
@@ -22,7 +22,7 @@ public:
     {
         {
             auto cfg = _bus_instance.config();
-            cfg.spi_host = SPI3_HOST;
+            cfg.spi_host = SPI2_HOST;
             cfg.spi_mode = 3;
             cfg.freq_write = 40000000;
             cfg.freq_read  = 16000000;
